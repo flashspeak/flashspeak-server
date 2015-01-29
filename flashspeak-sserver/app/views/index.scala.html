@@ -1,0 +1,32 @@
+@(message: String)
+
+<html>
+
+  <title>FlashSpeak</title>
+
+  <h1>FlashSpeak <small>(but not flash styling)</small></h1>
+
+  <p>
+    This is going to be a very basic server, plumbing files sent from the phone through to Praat for analysis, and then
+      notifying the phone when the result is ready.
+  </p>
+
+  <p>
+      Many of the URLs below are for testing, to see that each stage of connectivity is working
+  </p>
+
+
+  <h2>Test URLs</h2>
+
+  <p>
+      <pre>GET /echo?s=someText</pre>
+      Checks that communication with the shell is working by running "echo" at the shell and capturing the result
+  </p>
+
+  <p>
+    <pre>PUT /echoLs</pre>
+    Checks that file handling is working by saving the file to a temporary file, running "ls -l" on it, and returning the result
+  </p>
+
+
+</html>
