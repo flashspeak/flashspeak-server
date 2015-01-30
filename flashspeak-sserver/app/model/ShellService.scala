@@ -20,6 +20,7 @@ object ShellService {
    */
   def echoLs(f:File):String = {
     println(f.getCanonicalPath)
+
     Seq("ls", "-l", f.getCanonicalPath).!!
   }
 
@@ -28,9 +29,9 @@ object ShellService {
    * The script we really want to run to process the file
    */
   def process(f:File) = {
-    val ourShellScript = "processIt.sh"
-
-    Seq(ourShellScript, f.getCanonicalPath).!!
+    val ourShellScript = "shell/script.praat" // TODO: this is relying on us setting up a symlink from wherever sbt is running
+    Seq("praat", ourShellScript, f.getAbsolutePath, f.getCanonicalPath + ".png").!!
+    f.getCanonicalPath + ".png"
   }
 
 }

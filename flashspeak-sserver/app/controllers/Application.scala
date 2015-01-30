@@ -15,8 +15,8 @@ object Application extends Controller {
    * @param proj some unique string for this collection of stuff (just set it to 'foo' for now)
    * @return
    */
-  def receiveWav(proj:String) = Action(parse.temporaryFile) { request =>
-    Ok("File uploaded")
+  def process = Action(parse.temporaryFile) { request =>
+    Ok(ShellService.process(request.body.file))
   }
 
   /**

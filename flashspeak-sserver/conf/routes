@@ -8,6 +8,7 @@ GET     /                           controllers.Application.index
 # Simple tests
 GET     /echoBack                   controllers.Application.echoBack(s:String)
 PUT     /echoLs                     controllers.Application.echoLs
+PUT     /processIt                  controllers.Application.process
 
 
 # Map static resources from the /public folder to the /assets URL path
