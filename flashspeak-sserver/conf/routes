@@ -9,6 +9,7 @@ GET     /                           controllers.Application.index
 GET     /echoBack                   controllers.Application.echoBack(s:String)
 PUT     /echoLs                     controllers.Application.echoLs
 PUT     /processIt                  controllers.Application.process
+GET     /lastImage                  controllers.Application.lastImage
 
 
 # Map static resources from the /public folder to the /assets URL path

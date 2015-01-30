@@ -2,9 +2,15 @@ package controllers
 
 import model.ShellService
 import play.api._
+import play.api.libs.iteratee.Enumerator
 import play.api.mvc._
 
+import scala.concurrent.ExecutionContext.Implicits.global
+
 object Application extends Controller {
+
+  var lastImageFN = "";
+
 
   def index = Action {
     Ok(views.html.index("Your new application is ready."))
@@ -16,7 +22,18 @@ object Application extends Controller {
    * @return
    */
   def process = Action(parse.temporaryFile) { request =>
-    Ok(ShellService.process(request.body.file))
+    this.lastImageFN = ShellService.process(request.body.file)
+    Ok(lastImageFN)
+  }
+
+  def lastImage = Action { request =>
+    val file = new java.io.File(lastImageFN)
+    val fileContent: Enumerator[Array[Byte]] = Enumerator.fromFile(file)
+
+    Result(
+      header = ResponseHeader(200),
+      body = fileContent
+    )
   }
 
   /**
