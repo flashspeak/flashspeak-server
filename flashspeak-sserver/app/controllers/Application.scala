@@ -9,6 +9,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
+  var lastSoundFN = "";
   var lastImageFN = "";
 
 
@@ -22,12 +23,25 @@ object Application extends Controller {
    * @return
    */
   def process = Action(parse.temporaryFile) { request =>
-    this.lastImageFN = ShellService.process(request.body.file)
+
+    val file = request.body.file
+    lastSoundFN = file.getCanonicalPath
+    this.lastImageFN = ShellService.process(file)
     Ok(lastImageFN)
   }
 
   def lastImage = Action { request =>
     val file = new java.io.File(lastImageFN)
+    val fileContent: Enumerator[Array[Byte]] = Enumerator.fromFile(file)
+
+    Result(
+      header = ResponseHeader(200),
+      body = fileContent
+    )
+  }
+
+  def lastSound = Action { request =>
+    val file = new java.io.File(lastSoundFN)
     val fileContent: Enumerator[Array[Byte]] = Enumerator.fromFile(file)
 
     Result(

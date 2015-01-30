@@ -17,5 +17,5 @@ Viewport... 0 7 1 4
 
 selectObject: spectrogram
 Paint... 0 0 0 0 100 yes 45 6 0 no
-Save as 600-dpi PNG file: out_file$ 
+Save as 300-dpi PNG file: out_file$
 
