@@ -2,12 +2,19 @@ package model
 
 import java.io.File
 
+import play.api.Play
+
 import sys.process._
 
 /**
  * A home for our functions that call out to the shell
  */
 object ShellService {
+
+
+  val dir = Play.current.configuration.getString("flashspeak.shell.dir")
+
+  val praatExe = Play.current.configuration.getString("flashspeak.praat.path")
 
   /**
    * Sanity checks this is working, by doing a shell echo and returning the result
@@ -31,8 +38,12 @@ object ShellService {
   def process(f:File) = {
     val ourShellScript = "shell/script.praat" // TODO: this is relying on us setting up a symlink from wherever sbt is running
     Seq("ffmpeg", "-i", f.getAbsolutePath, f.getCanonicalPath + ".wav").!!
-    Seq("praat", ourShellScript, f.getAbsolutePath + ".wav", f.getCanonicalPath + ".png").!!
+    (praatExe.toSeq ++ Seq("--run", ourShellScript, f.getAbsolutePath + ".wav", f.getCanonicalPath + ".png")).!!
     f.getCanonicalPath + ".png"
+  }
+
+  def process(f:File, script:String) = {
+
   }
 
 }

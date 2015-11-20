@@ -25,6 +25,7 @@ object Application extends Controller {
   def process = Action(parse.temporaryFile) { request =>
 
     val file = request.body.file
+    println(file.getCanonicalPath)
     lastSoundFN = file.getCanonicalPath
     this.lastImageFN = ShellService.process(file)
     Ok(lastImageFN)
